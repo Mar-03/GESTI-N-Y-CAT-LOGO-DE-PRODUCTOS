@@ -78,7 +78,6 @@ export default function ProductForm({ onSubmit, loading = false, onSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Integrante 2</p>
         <h3 className="mt-2 text-2xl font-bold text-slate-900">Crear producto</h3>
       </div>
 
