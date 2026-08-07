@@ -115,7 +115,6 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Integrante 3</p>
             <h2 className="mt-2 text-3xl font-bold text-slate-900">CRUD integrado de productos</h2>
             <p className="mt-2 text-slate-600">Creación, detalle, actualización y eliminación en una sola vista.</p>
           </div>

@@ -6,9 +6,6 @@ export default function Navbar() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Proyecto Frontend</p>
           <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Gestión y Catálogo de Productos</h1>
         </div>
-        <span className="hidden rounded-full bg-sky-50 px-3 py-1 text-sm font-medium text-sky-700 sm:inline-flex">
-          Integrante 1: María Fajardo
-        </span>
       </div>
     </header>
   );
