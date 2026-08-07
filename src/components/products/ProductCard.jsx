@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onEdit, onDelete }) {
   const price = Number(product.precio).toFixed(2);
   const offerPrice = product.precioOferta ? Number(product.precioOferta).toFixed(2) : null;
 
@@ -46,6 +46,23 @@ export default function ProductCard({ product }) {
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
             ID {product.id}
           </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 pt-1">
+          <button
+            type="button"
+            onClick={() => onEdit?.(product)}
+            className="rounded-xl border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
+          >
+            Editar
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete?.(product)}
+            className="rounded-xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50"
+          >
+            Eliminar
+          </button>
         </div>
       </div>
     </article>
