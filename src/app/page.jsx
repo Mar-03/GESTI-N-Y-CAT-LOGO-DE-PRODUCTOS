@@ -6,8 +6,10 @@ import ConfirmDelete from '@/components/products/ConfirmDelete';
 import ProductDetailModal from '@/components/products/ProductDetailModal';
 import ProductEditModal from '@/components/products/ProductEditModal';
 import ProductForm from '@/components/products/ProductForm';
+import ProductFilters from '@/components/products/ProductFilters';
 import ProductList from '@/components/products/ProductList';
 import { createProduct, deleteProduct, getProductById, getProducts, updateProduct } from '@/services/api';
+import { getUniqueCategories } from '@/utils/categories';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -21,6 +23,9 @@ export default function Home() {
   const [deleteProductItem, setDeleteProductItem] = useState(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [onlyOffers, setOnlyOffers] = useState(false);
 
   async function loadProducts() {
     try {
@@ -109,14 +114,29 @@ export default function Home() {
     }
   }
 
+  function clearFilters() {
+    setSearchTerm('');
+    setSelectedCategory('all');
+    setOnlyOffers(false);
+  }
+
+  const categories = getUniqueCategories(products);
+  const filteredProducts = products.filter((product) => {
+    const matchesName = product.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || String(product.categoriaId) === String(selectedCategory);
+    const matchesOffer = !onlyOffers || Boolean(product.enOferta);
+
+    return matchesName && matchesCategory && matchesOffer;
+  });
+
   return (
     <main>
       <Navbar />
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="mt-2 text-3xl font-bold text-slate-900">CRUD integrado de productos</h2>
-            <p className="mt-2 text-slate-600">Creación, detalle, actualización y eliminación en una sola vista.</p>
+            <h2 className="mt-2 text-3xl font-bold text-slate-900">Catálogo de productos</h2>
+            <p className="mt-2 text-slate-600">Creación, detalle, actualización, eliminación y filtros dinámicos.</p>
           </div>
           <span className="inline-flex rounded-full bg-sky-50 px-4 py-2 text-sm font-medium text-sky-700">
             {products.length} productos
@@ -137,9 +157,20 @@ export default function Home() {
                 <h3 className="mt-2 text-2xl font-bold text-slate-900">Productos registrados</h3>
               </div>
               <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600">
-                {detailLoading ? 'Cargando detalle...' : 'Vista general'}
+                {detailLoading ? 'Cargando detalle...' : `${filteredProducts.length} visibles`}
               </span>
             </div>
+
+            <ProductFilters
+              searchTerm={searchTerm}
+              selectedCategory={selectedCategory}
+              onlyOffers={onlyOffers}
+              categories={categories}
+              onSearchChange={setSearchTerm}
+              onCategoryChange={setSelectedCategory}
+              onOnlyOffersChange={setOnlyOffers}
+              onClearFilters={clearFilters}
+            />
 
             {feedback.message ? (
               <div
@@ -164,12 +195,17 @@ export default function Home() {
               </div>
             ) : error ? (
               <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">{error}</div>
-            ) : products.length === 0 ? (
+            ) : filteredProducts.length === 0 ? (
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-600">
-                No hay productos disponibles.
+                No hay productos que coincidan con los filtros.
               </div>
             ) : (
-              <ProductList products={products} onViewDetail={handleViewDetail} onEdit={handleEdit} onDelete={handleDelete} />
+              <ProductList
+                products={filteredProducts}
+                onViewDetail={handleViewDetail}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
             )}
           </div>
         </div>
