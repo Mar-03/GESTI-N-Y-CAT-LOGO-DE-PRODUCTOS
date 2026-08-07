@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export default function ProductCard({ product, onEdit, onDelete }) {
   const price = Number(product.precio).toFixed(2);
   const offerPrice = product.precioOferta ? Number(product.precioOferta).toFixed(2) : null;
@@ -7,12 +5,11 @@ export default function ProductCard({ product, onEdit, onDelete }) {
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <div className="aspect-[16/10] bg-slate-100">
-        <Image
+        <img
           src={product.imagen || 'https://placehold.co/600x400?text=Producto'}
           alt={product.nombre}
-          width={600}
-          height={400}
           className="h-full w-full object-cover"
+          loading="lazy"
         />
       </div>
 
