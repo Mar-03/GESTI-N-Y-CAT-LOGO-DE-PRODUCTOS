@@ -13,9 +13,10 @@ const initialForm = {
   categoriaNombre: '',
 };
 
-export default function ProductForm({ onSubmit, loading = false }) {
+export default function ProductForm({ onSubmit, loading = false, onSuccess }) {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState('');
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -48,24 +49,30 @@ export default function ProductForm({ onSubmit, loading = false }) {
 
     const nextErrors = validate();
     setErrors(nextErrors);
+    setSubmitError('');
 
     if (Object.keys(nextErrors).length > 0) {
       return;
     }
 
-    await onSubmit({
-      nombre: form.nombre.trim(),
-      descripcion: form.descripcion.trim(),
-      precio: Number(form.precio),
-      enOferta: form.enOferta,
-      precioOferta: form.enOferta ? Number(form.precioOferta) : 0,
-      imagen: form.imagen.trim(),
-      categoriaId: Number(form.categoriaId),
-      categoriaNombre: form.categoriaNombre.trim(),
-    });
+    try {
+      await onSubmit({
+        nombre: form.nombre.trim(),
+        descripcion: form.descripcion.trim(),
+        precio: Number(form.precio),
+        enOferta: form.enOferta,
+        precioOferta: form.enOferta ? Number(form.precioOferta) : 0,
+        imagen: form.imagen.trim(),
+        categoriaId: Number(form.categoriaId),
+        categoriaNombre: form.categoriaNombre.trim(),
+      });
 
-    setForm(initialForm);
-    setErrors({});
+      setForm(initialForm);
+      setErrors({});
+      onSuccess?.();
+    } catch (error) {
+      setSubmitError(error.message || 'No se pudo guardar el producto.');
+    }
   }
 
   return (
@@ -110,6 +117,8 @@ export default function ProductForm({ onSubmit, loading = false }) {
       >
         {loading ? 'Guardando...' : 'Guardar producto'}
       </button>
+
+      {submitError ? <p className="text-sm font-medium text-red-600">{submitError}</p> : null}
     </form>
   );
 }
