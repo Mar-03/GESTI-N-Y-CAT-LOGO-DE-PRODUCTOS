@@ -39,3 +39,31 @@ export async function createProduct(product) {
 
   return response.json();
 }
+
+export async function updateProduct(id, product) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(product),
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo actualizar el producto.');
+  }
+
+  return response.json();
+}
+
+export async function deleteProduct(id) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo eliminar el producto.');
+  }
+
+  return true;
+}

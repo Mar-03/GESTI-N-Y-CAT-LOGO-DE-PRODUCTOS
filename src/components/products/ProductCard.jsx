@@ -1,18 +1,15 @@
-import Image from 'next/image';
-
-export default function ProductCard({ product, onViewDetail }) {
+export default function ProductCard({ product, onViewDetail, onEdit, onDelete }) {
   const price = Number(product.precio).toFixed(2);
   const offerPrice = product.precioOferta ? Number(product.precioOferta).toFixed(2) : null;
 
   return (
     <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <div className="aspect-[16/10] bg-slate-100">
-        <Image
+        <img
           src={product.imagen || 'https://placehold.co/600x400?text=Producto'}
           alt={product.nombre}
-          width={600}
-          height={400}
           className="h-full w-full object-cover"
+          loading="lazy"
         />
       </div>
 
@@ -48,15 +45,30 @@ export default function ProductCard({ product, onViewDetail }) {
           </span>
         </div>
 
-        {onViewDetail ? (
+        <div className="grid grid-cols-2 gap-3 pt-1">
           <button
             type="button"
-            onClick={() => onViewDetail(product.id)}
-            className="w-full rounded-xl border border-sky-200 px-4 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
+            onClick={() => onEdit?.(product)}
+            className="rounded-xl border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
           >
-            Ver detalle
+            Editar
           </button>
-        ) : null}
+          <button
+            type="button"
+            onClick={() => onDelete?.(product)}
+            className="rounded-xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50"
+          >
+            Eliminar
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onViewDetail?.(product.id)}
+          className="w-full rounded-xl border border-sky-200 px-4 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
+        >
+          Ver detalle
+        </button>
       </div>
     </article>
   );
