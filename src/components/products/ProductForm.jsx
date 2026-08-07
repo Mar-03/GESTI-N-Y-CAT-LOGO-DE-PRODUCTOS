@@ -76,9 +76,9 @@ export default function ProductForm({ onSubmit, loading = false, onSuccess }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-[#987b80]/15 bg-[#ffeeee] p-6 shadow-sm">
       <div>
-        <h3 className="mt-2 text-2xl font-bold text-slate-900">Crear producto</h3>
+        <h3 className="mt-2 text-2xl font-bold text-[#6d3536]">Nuevo producto</h3>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -98,13 +98,13 @@ export default function ProductForm({ onSubmit, loading = false, onSuccess }) {
         <Field label="Precio oferta" name="precioOferta" type="number" step="0.01" value={form.precioOferta} onChange={handleChange} error={errors.precioOferta} />
       </div>
 
-      <label className="flex items-center gap-3 rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
+      <label className="flex items-center gap-3 rounded-xl bg-white/70 px-4 py-3 text-sm font-medium text-[#6d3536]">
         <input
           type="checkbox"
           name="enOferta"
           checked={form.enOferta}
           onChange={handleChange}
-          className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+          className="h-4 w-4 rounded border-[#987b80]/30 text-[#6d3536] focus:ring-[#987b80]"
         />
         Producto en oferta
       </label>
@@ -112,30 +112,30 @@ export default function ProductForm({ onSubmit, loading = false, onSuccess }) {
       <button
         type="submit"
         disabled={loading}
-        className="inline-flex w-full items-center justify-center rounded-xl bg-sky-600 px-4 py-3 font-semibold text-white transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center rounded-xl bg-[#6d3536] px-4 py-3 font-semibold text-white transition hover:bg-[#987b80] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? 'Guardando...' : 'Guardar producto'}
       </button>
 
-      {submitError ? <p className="text-sm font-medium text-red-600">{submitError}</p> : null}
+      {submitError ? <p className="text-sm font-medium text-[#987b80]">{submitError}</p> : null}
     </form>
   );
 }
 
 function Field({ label, error, textarea = false, className = '', ...props }) {
-  const baseClass = `w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-sky-200 ${
-    error ? 'border-red-300' : 'border-slate-200'
+  const baseClass = `w-full rounded-xl border bg-white/70 px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[#987b80]/25 ${
+    error ? 'border-[#987b80]' : 'border-[#987b80]/30'
   } ${className}`;
 
   return (
     <label className="block space-y-2">
-      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <span className="text-sm font-medium text-[#6d3536]">{label}</span>
       {textarea ? (
         <textarea {...props} className={baseClass} rows={4} />
       ) : (
         <input {...props} className={baseClass} />
       )}
-      {error ? <span className="text-xs font-medium text-red-600">{error}</span> : null}
+      {error ? <span className="text-xs font-medium text-[#987b80]">{error}</span> : null}
     </label>
   );
 }

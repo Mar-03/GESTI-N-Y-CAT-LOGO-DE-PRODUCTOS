@@ -58,14 +58,14 @@ export default function ProductEditModal({ product, onClose, onSave, loading = f
   if (!product) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-8">
-      <div className="w-full max-w-2xl rounded-3xl bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#6d3536]/70 px-4 py-8">
+      <div className="w-full max-w-2xl rounded-3xl bg-[#ffeeee] shadow-2xl">
+        <div className="flex items-center justify-between border-b border-[#987b80]/15 px-6 py-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Editar producto</p>
-            <h3 className="text-2xl font-bold text-slate-900">{product.nombre}</h3>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#6d3536]">Editar producto</p>
+            <h3 className="text-2xl font-bold text-[#6d3536]">{product.nombre}</h3>
           </div>
-          <button onClick={onClose} className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
+          <button onClick={onClose} className="rounded-full bg-white/70 px-3 py-1 text-sm font-medium text-[#6d3536]">
             Cerrar
           </button>
         </div>
@@ -88,13 +88,13 @@ export default function ProductEditModal({ product, onClose, onSave, loading = f
             <Field label="Precio oferta" name="precioOferta" type="number" step="0.01" value={form.precioOferta || ''} onChange={handleChange} error={errors.precioOferta} />
           </div>
 
-          <label className="flex items-center gap-3 rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
+          <label className="flex items-center gap-3 rounded-xl bg-white/70 px-4 py-3 text-sm font-medium text-[#6d3536]">
             <input
               type="checkbox"
               name="enOferta"
               checked={Boolean(form.enOferta)}
               onChange={handleChange}
-              className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+              className="h-4 w-4 rounded border-[#987b80]/30 text-[#6d3536] focus:ring-[#987b80]"
             />
             Producto en oferta
           </label>
@@ -103,14 +103,14 @@ export default function ProductEditModal({ product, onClose, onSave, loading = f
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700"
+              className="flex-1 rounded-xl border border-[#987b80]/15 px-4 py-3 font-semibold text-[#6d3536]"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 rounded-xl bg-sky-600 px-4 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex-1 rounded-xl bg-[#6d3536] px-4 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? 'Guardando...' : 'Actualizar'}
             </button>
@@ -122,15 +122,15 @@ export default function ProductEditModal({ product, onClose, onSave, loading = f
 }
 
 function Field({ label, error, textarea = false, ...props }) {
-  const baseClass = `w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-sky-200 ${
-    error ? 'border-red-300' : 'border-slate-200'
+  const baseClass = `w-full rounded-xl border bg-white/70 px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[#987b80]/25 ${
+    error ? 'border-[#987b80]' : 'border-[#987b80]/30'
   }`;
 
   return (
     <label className="block space-y-2">
-      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <span className="text-sm font-medium text-[#6d3536]">{label}</span>
       {textarea ? <textarea {...props} className={baseClass} rows={4} /> : <input {...props} className={baseClass} />}
-      {error ? <span className="text-xs font-medium text-red-600">{error}</span> : null}
+      {error ? <span className="text-xs font-medium text-[#987b80]">{error}</span> : null}
     </label>
   );
 }
