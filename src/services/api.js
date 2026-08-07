@@ -12,6 +12,34 @@ export async function getProducts() {
   return response.json();
 }
 
+export async function getProductById(id) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo obtener el producto.');
+  }
+
+  return response.json();
+}
+
+export async function createProduct(product) {
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(product),
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo crear el producto.');
+  }
+
+  return response.json();
+}
+
 export async function updateProduct(id, product) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',

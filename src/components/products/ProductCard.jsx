@@ -1,4 +1,4 @@
-export default function ProductCard({ product, onEdit, onDelete }) {
+export default function ProductCard({ product, onViewDetail, onEdit, onDelete }) {
   const price = Number(product.precio).toFixed(2);
   const offerPrice = product.precioOferta ? Number(product.precioOferta).toFixed(2) : null;
 
@@ -61,6 +61,14 @@ export default function ProductCard({ product, onEdit, onDelete }) {
             Eliminar
           </button>
         </div>
+
+        <button
+          type="button"
+          onClick={() => onViewDetail?.(product.id)}
+          className="w-full rounded-xl border border-sky-200 px-4 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-50"
+        >
+          Ver detalle
+        </button>
       </div>
     </article>
   );
